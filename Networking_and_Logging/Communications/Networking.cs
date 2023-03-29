@@ -13,6 +13,7 @@ namespace Communications
         private ReportMessageArrived onMessage;
         private ReportDisconnect reportDisconnect;
         private ReportConnectionEstablished onConnect;
+        private CancellationTokenSource cancelToken;
         private char terminationChar;
         private TcpClient? client;
         private ILogger logger;
@@ -23,6 +24,7 @@ namespace Communications
                           ReportMessageArrived onMessage, char terminationCharacter)
         {
             ID                    = "Jim";
+            cancelToken           = new CancellationTokenSource(terminationChar);
             terminationChar       = terminationCharacter;
             this.logger           = logger;
             this.onMessage        = onMessage;
@@ -48,18 +50,19 @@ namespace Communications
             if (client != null)
             {
                 NetworkStream clientStream = client.GetStream();
-                byte[] message = new byte[clientStream.Length];
+                byte[] message = new byte[clientStream.Length];clien
                 if (infinite == true)
                 {
                     while (infinite)
                     {
-                        CancellationTokenSource cancelToken = new CancellationTokenSource(terminationChar);
                         await clientStream.ReadAsync(message, 0, message.Length, cancelToken.Token);
                     }
                 }
                 else
                 {
-
+                    await clientStream.ReadAsync(message, 0, message.Length, cancelToken.Token);
+                    clientStream.EndRead();
+                    return;
                 }
             }
         }
