@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 using System.Net.Sockets;
+using System.Text;
 
 namespace Communications
 {
@@ -15,6 +16,7 @@ namespace Communications
         private ReportConnectionEstablished onConnect;
         private CancellationTokenSource cancelToken;
         private char terminationChar;
+        private List<TcpClient> connectedClients;
         private TcpClient? client;
         private ILogger logger;
 
@@ -30,6 +32,7 @@ namespace Communications
             this.onMessage        = onMessage;
             this.onConnect        = onConnect;
             this.reportDisconnect = reportDisconnect;
+            connectedClients      = new List<TcpClient>();
         }
 
         public void Connect(string host, int port)
@@ -37,39 +40,48 @@ namespace Communications
             try
             {
                 client = new TcpClient(host, port);
+                onConnect(this);
             }
             catch
             {
-                logger.LogError("There was a problem connecting to the server. Check to make sure the given" +
-                    " host and port are correct.");
+                logger.LogError("There was a problem connecting to the server. Check to make sure the given " +
+                                "host and port are correct.");
             }
         }
 
         public async void AwaitMessagesAsync(bool infinite = true)
         {
-            if (client != null)
+            try
             {
-                NetworkStream clientStream = client.GetStream();
-                byte[] message = new byte[clientStream.Length];clien
-                if (infinite == true)
+                if (client != null)
                 {
-                    while (infinite)
+                    NetworkStream clientStream = client.GetStream();
+                    byte[] message = new byte[clientStream.Length];
+                    if (infinite == true)
+                    {
+                        while (infinite)
+                        {
+                            await clientStream.ReadAsync(message, 0, message.Length, cancelToken.Token);
+                            onMessage(this, message.ToString());
+                        }
+                    }
+                    else
                     {
                         await clientStream.ReadAsync(message, 0, message.Length, cancelToken.Token);
+                        onMessage(this, message.ToString());
+                        return;
                     }
                 }
-                else
-                {
-                    await clientStream.ReadAsync(message, 0, message.Length, cancelToken.Token);
-                    clientStream.EndRead();
-                    return;
-                }
+            }
+            catch (ObjectDisposedException)
+            {
+                reportDisconnect(this);
             }
         }
 
         public async void WaitForClients(int port, bool infinte)
         {
-
+            TcpListener listener = new TcpListener(System.Net.IPAddress.Any, port);
         }
 
         public void StopWaitingForClients()
@@ -79,12 +91,19 @@ namespace Communications
 
         public void Disconnect()
         {
-
+            client.Close();
         }
 
-        public async void Start(string text)
+        public async void Send(string text)
         {
-
+            if (!text.Contains(terminationChar))
+            {
+                text += terminationChar;
+                NetworkStream clientStream = client.GetStream();
+                byte[] message = Encoding.UTF8.GetBytes(text);
+                CancellationTokenSource source = new CancellationTokenSource(terminationChar);
+                await clientStream.WriteAsync(message, 0, message.Length, source.Token);
+            }
         }
     }
 }

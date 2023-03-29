@@ -7,24 +7,28 @@
         <Line HeightRequest="25" WidthRequest="50" />
         <VerticalStackLayout>
             <Line HeightRequest="25" WidthRequest="50" />
-            <Entry x:Name="serverAdd" HorizontalOptions="Start" Text="Enter Server Name/Address:" 
-                                                                        HeightRequest="25" WidthRequest="300"/>
+            <Label Text="Enter Server Name/Address Below"/>
+            <Entry x:Name="serverAdd" HorizontalOptions="Start" HeightRequest="25" WidthRequest="500"/>
+            
             <Line HeightRequest="25" WidthRequest="50" />
-            <Entry x:Name="name" HorizontalOptions="Start" Text="Enter Your Name:" 
-                                                                        HeightRequest="25" WidthRequest="300"/>
+            <Label Text="Enter Name Below"/>
+            <Entry x:Name="name" HorizontalOptions="Start" HeightRequest="25" WidthRequest="500"/>
+            
             <Line HeightRequest="25" WidthRequest="50" />
             <Button x:Name="connect" HorizontalOptions="Start" Text="Connect to Server" 
-                                                                        HeightRequest="25" WidthRequest="300"/>
+                                                        HeightRequest="25" WidthRequest="500"/>
+                
             <Line HeightRequest="25" WidthRequest="50" />
-            <Entry x:Name="message" HorizontalOptions="Start" Text="Enter a Message:" 
-                                                                        HeightRequest="25" WidthRequest="300"/>
+            <Label Text="Enter a Message Below"/>
+            <Entry x:Name="message" HorizontalOptions="Start" HeightRequest="25" WidthRequest="300"/>
             <Line HeightRequest="25" WidthRequest="50" />
-            <Border HeightRequest="300" WidthRequest="600">
+            <Border HeightRequest="250" WidthRequest="700">
                 <VerticalStackLayout>
                     <ScrollView Orientation="Vertical" VerticalScrollBarVisibility="Always"/>
                     <!-- As messages are sent, labels with those messages will be added -->
                 </VerticalStackLayout>
             </Border>
+                
         </VerticalStackLayout>
         <Line HeightRequest="25" WidthRequest="200" />
         <VerticalStackLayout>
