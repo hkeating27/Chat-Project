@@ -5,11 +5,9 @@ VisualStudioVersion = 17.0.31611.283
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChatClient", "ChatClient\ChatClient.csproj", "{9FA2DC71-B867-4755-9907-C3D382FE72D9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChatServer", "ChatServer\ChatServer.csproj", "{6FE99637-E16B-4E90-A70A-0733682EF2B1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChatServer", "ChatServer\ChatServer.csproj", "{6FE99637-E16B-4E90-A70A-0733682EF2B1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Communications", "Communications\Communications.csproj", "{A8F6E9E8-46FF-41ED-A3AD-4EB51BC4CD9B}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileLogger", "FileLogger\FileLogger.csproj", "{A47F1902-3EF7-40E0-9470-1C373092FB8B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Communications", "Communications\Communications.csproj", "{A8F6E9E8-46FF-41ED-A3AD-4EB51BC4CD9B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,10 +31,6 @@ Global
 		{A8F6E9E8-46FF-41ED-A3AD-4EB51BC4CD9B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A8F6E9E8-46FF-41ED-A3AD-4EB51BC4CD9B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A8F6E9E8-46FF-41ED-A3AD-4EB51BC4CD9B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A47F1902-3EF7-40E0-9470-1C373092FB8B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A47F1902-3EF7-40E0-9470-1C373092FB8B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A47F1902-3EF7-40E0-9470-1C373092FB8B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A47F1902-3EF7-40E0-9470-1C373092FB8B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

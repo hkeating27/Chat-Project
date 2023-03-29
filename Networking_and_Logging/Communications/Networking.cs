@@ -1,6 +1,6 @@
 ﻿namespace Communications
 {
-    public class Communications
+    public class Networking
     {
 
     }
