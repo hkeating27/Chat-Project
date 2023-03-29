@@ -3,6 +3,27 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ChatServer.MainPage">
 
-    
+    <HorizontalStackLayout>
+        <VerticalStackLayout>
+            <Label HeightRequest="25" WidthRequest="100" Text="Participants" />
+            <Border HeightRequest="400" WidthRequest="400">
+                <VerticalStackLayout x:Name="activeParticipants">
+                    <!-- As participants join, labels with their name will be added-->
+                </VerticalStackLayout>
+            </Border>
+            <Line HeightRequest="100" WidthRequest="500"/>
+            <Button x:Name="serverShutdown" Text="Shutdown Server" HeightRequest="25" WidthRequest="400" />
+        </VerticalStackLayout>
+        <VerticalStackLayout>
+            <Entry x:Name="serverName" Text="Enter Server Name: " HorizontalOptions="Start" HeightRequest="25" WidthRequest="300"/>
+            <Entry x:Name="ipAddress" Text="Enter Server IP Address: " HorizontalOptions="Start" HeightRequest="25" WidthRequest="300"/>
+            <Border HeightRequest="500" WidthRequest="600">
+                <VerticalStackLayout x:Name="allSentMessages">
+                    <ScrollView Orientation="Vertical" VerticalScrollBarVisibility="Always"/>
+                    <!-- As messages are sent, labels with those messages will be added-->
+                </VerticalStackLayout>
+            </Border>
+        </VerticalStackLayout>
+    </HorizontalStackLayout>
 
 </ContentPage>

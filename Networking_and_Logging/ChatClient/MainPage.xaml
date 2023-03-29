@@ -3,14 +3,39 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ChatClient.MainPage">
 
-    <VerticalStackLayout>
-        <Entry Text="Enter a Server Address:" />
-        <Entry Text="Enter Your Name:" />
-        <Button Text="Connect To Server" />
-        <Entry Text="Type a Message:" />
-        <Border>
-            <Label Text="" />
-        </Border>
-    </VerticalStackLayout>
+    <HorizontalStackLayout>
+        <Line HeightRequest="25" WidthRequest="50" />
+        <VerticalStackLayout>
+            <Line HeightRequest="25" WidthRequest="50" />
+            <Entry x:Name="serverAdd" HorizontalOptions="Start" Text="Enter Server Name/Address:" 
+                                                                        HeightRequest="25" WidthRequest="300"/>
+            <Line HeightRequest="25" WidthRequest="50" />
+            <Entry x:Name="name" HorizontalOptions="Start" Text="Enter Your Name:" 
+                                                                        HeightRequest="25" WidthRequest="300"/>
+            <Line HeightRequest="25" WidthRequest="50" />
+            <Button x:Name="connect" HorizontalOptions="Start" Text="Connect to Server" 
+                                                                        HeightRequest="25" WidthRequest="300"/>
+            <Line HeightRequest="25" WidthRequest="50" />
+            <Entry x:Name="message" HorizontalOptions="Start" Text="Enter a Message:" 
+                                                                        HeightRequest="25" WidthRequest="300"/>
+            <Line HeightRequest="25" WidthRequest="50" />
+            <Border HeightRequest="300" WidthRequest="600">
+                <VerticalStackLayout>
+                    <ScrollView Orientation="Vertical" VerticalScrollBarVisibility="Always"/>
+                    <!-- As messages are sent, labels with those messages will be added -->
+                </VerticalStackLayout>
+            </Border>
+        </VerticalStackLayout>
+        <Line HeightRequest="25" WidthRequest="200" />
+        <VerticalStackLayout>
+            <Line HeightRequest="100" WidthRequest="50" />
+            <Border HeightRequest="300" WidthRequest="350">
+                <VerticalStackLayout>
+                    <!-- When the RetrieveParticipants button is clicked, labels with those participants will be added-->
+                </VerticalStackLayout>
+            </Border>
+            <Button x:Name="retrieveParticipants" Text="Retrieve Participants" HeightRequest="25" WidthRequest="200"/>
+        </VerticalStackLayout>
+    </HorizontalStackLayout>
 
 </ContentPage>
