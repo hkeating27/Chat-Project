@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
+using System.Net.Sockets;
 
 namespace Communications
 {
@@ -12,26 +13,55 @@ namespace Communications
         private ReportMessageArrived onMessage;
         private ReportDisconnect reportDisconnect;
         private ReportConnectionEstablished onConnect;
+        private char terminationChar;
+        private TcpClient? client;
+        private ILogger logger;
 
         public string ID { get; set; }
 
         public Networking(ILogger logger, ReportConnectionEstablished onConnect, ReportDisconnect reportDisconnect,
                           ReportMessageArrived onMessage, char terminationCharacter)
         {
-            ID = "Jim";
-            this.onMessage = onMessage;
+            ID                    = "Jim";
+            terminationChar       = terminationCharacter;
+            this.logger           = logger;
+            this.onMessage        = onMessage;
+            this.onConnect        = onConnect;
             this.reportDisconnect = reportDisconnect;
-            this.onConnect = onConnect;
         }
 
         public void Connect(string host, int port)
         {
-            
+            try
+            {
+                client = new TcpClient(host, port);
+            }
+            catch
+            {
+                logger.LogError("There was a problem connecting to the server. Check to make sure the given" +
+                    " host and port are correct.");
+            }
         }
 
         public async void AwaitMessagesAsync(bool infinite = true)
         {
+            if (client != null)
+            {
+                NetworkStream clientStream = client.GetStream();
+                byte[] message = new byte[clientStream.Length];
+                if (infinite == true)
+                {
+                    while (infinite)
+                    {
+                        CancellationTokenSource cancelToken = new CancellationTokenSource(terminationChar);
+                        await clientStream.ReadAsync(message, 0, message.Length, cancelToken.Token);
+                    }
+                }
+                else
+                {
 
+                }
+            }
         }
 
         public async void WaitForClients(int port, bool infinte)
