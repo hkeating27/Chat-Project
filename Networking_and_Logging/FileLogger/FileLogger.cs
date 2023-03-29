@@ -1,6 +1,8 @@
-﻿namespace FileLogger
+﻿using Microsoft.Extensions.Logging;
+
+namespace FileLogger
 {
-    public class Class1
+    public class FileLogger : ILogger
     {
 
     }
