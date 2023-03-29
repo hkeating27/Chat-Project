@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using FileLogger;
+using Microsoft.Extensions.Logging;
 
 namespace ChatClient;
 
@@ -17,7 +18,7 @@ public static class MauiProgram
 			.Services.AddLogging(configure =>
 			 {
 				 configure.AddDebug();
-				 configure.AddProvider(new FileLogger());
+				 configure.AddProvider(new FileLoggerProvider());
 				 configure.SetMinimumLevel(LogLevel.Debug);
 			 })
 			.AddTransient<MainPage>();
