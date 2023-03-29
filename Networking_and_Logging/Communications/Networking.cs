@@ -1,9 +1,21 @@
-﻿namespace Communications
+﻿using Microsoft.Extensions.Logging;
+
+namespace Communications
 {
     public class Networking
     {
-        delegate void ReportMessageArrived(Networking channel, string message);
-        delegate void ReportDisconnect(Networking channel);
-        delegate void ReportConnectionEstablished(Networking channel);
+        //Fields
+        private delegate void ReportMessageArrived(Networking channel, string message);
+        private delegate void ReportDisconnect(Networking channel);
+        private delegate void ReportConnectionEstablished(Networking channel);
+        
+        public string ID { get; set; }
+
+        public Networking(ILogger logger, ReportConnectionEstablished onConnect, ReportDisconnect reportDisconnect
+                          ReportMessageArrived onMessage, char terminationCharacter)
+        {
+
+        }
+
     }
 }
