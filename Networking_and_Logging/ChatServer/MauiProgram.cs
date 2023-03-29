@@ -23,10 +23,6 @@ namespace ChatServer
                  })
                 .AddTransient<MainPage>();
 
-#if DEBUG
-            builder.Logging.AddDebug();
-#endif
-
             return builder.Build();
         }
     }
