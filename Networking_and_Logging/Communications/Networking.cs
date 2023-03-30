@@ -14,9 +14,9 @@ namespace Communications
         private ReportMessageArrived onMessage;
         private ReportDisconnect reportDisconnect;
         private ReportConnectionEstablished onConnect;
-        private CancellationTokenSource cancelToken;
+        private CancellationTokenSource cancelSource;
         private char terminationChar;
-        private List<TcpClient> connectedClients;
+        private List<Networking> connectedClients;
         private TcpClient client;
         private ILogger logger;
 
@@ -25,15 +25,29 @@ namespace Communications
         public Networking(ILogger logger, ReportConnectionEstablished onConnect, ReportDisconnect reportDisconnect,
                           ReportMessageArrived onMessage, char terminationCharacter)
         {
-            ID                    = "Jim";
-            cancelToken           = new CancellationTokenSource(terminationChar);
+            ID                    = "";
+            cancelSource           = new CancellationTokenSource();
             terminationChar       = terminationCharacter;
             this.logger           = logger;
             this.onMessage        = onMessage;
             this.onConnect        = onConnect;
             this.reportDisconnect = reportDisconnect;
-            connectedClients      = new List<TcpClient>();
+            connectedClients      = new List<Networking>();
             client                = new TcpClient();
+        }
+
+        private Networking(ILogger logger, TcpClient client, ReportConnectionEstablished onConnect, ReportDisconnect
+                           reportDisconnect, ReportMessageArrived onMessage, char terminationCharacter)
+        {
+            ID = "";
+            cancelSource = new CancellationTokenSource();
+            terminationChar = terminationCharacter;
+            this.logger = logger;
+            this.onMessage = onMessage;
+            this.onConnect = onConnect;
+            this.reportDisconnect = reportDisconnect;
+            connectedClients = new List<Networking>();
+            this.client = client;
         }
 
         public void Connect(string host, int port)
@@ -41,8 +55,6 @@ namespace Communications
             try
             {
                 client = new TcpClient(host, port);
-                connectedClients.Add(client);
-                onConnect(this);
             }
             catch
             {
@@ -61,13 +73,13 @@ namespace Communications
                 {
                     while (infinite)
                     {
-                        await clientStream.ReadAsync(message, 0, message.Length, cancelToken.Token);
+                        await clientStream.ReadAsync(message, 0, message.Length);
                         onMessage(this, message.ToString());
                     }
                 }
                 else
                 {
-                    await clientStream.ReadAsync(message, 0, message.Length, cancelToken.Token);
+                    await clientStream.ReadAsync(message, 0, message.Length);
                     onMessage(this, message.ToString());
                     return;
                 }
@@ -81,11 +93,26 @@ namespace Communications
         public async void WaitForClients(int port, bool infinte)
         {
             TcpListener listener = new TcpListener(System.Net.IPAddress.Any, port);
+            try
+            {
+                while (infinte)
+                {
+                    TcpClient connection = await listener.AcceptTcpClientAsync(cancelSource.Token);
+                    Networking newConnection = new Networking(logger, connection, onConnect, reportDisconnect,
+                                                              onMessage, terminationChar);
+                    connectedClients.Add(newConnection);
+                    onConnect(newConnection);
+                }
+            }
+            catch
+            {
+                listener.Stop();
+            }
         }
 
         public void StopWaitingForClients()
         {
-
+            cancelSource.Cancel();
         }
 
         public void Disconnect()

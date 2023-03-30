@@ -16,7 +16,7 @@ public partial class MainPage : ContentPage
 		network     = new Networking(new CustomFileLogger(), connectionComplete, connectionDropped, messageArrived, 
 									 '\n');
 		serverName = "";
-		text       = "";
+		text = "";
 	}
 
 	private void ConnectToServer(object sender, EventArgs e)
@@ -26,13 +26,16 @@ public partial class MainPage : ContentPage
 
 	private void connectionComplete(Networking client)
 	{
+		network = client;
 		Label connectedLabel = new Label();
-		connectedLabel.Text  = "Connection Successful. You may now send messages.";
+		connectedLabel.Text  = "Connection Successful. You may now send messages to the server.";
 		messages.Add(connectedLabel);
+		network.AwaitMessagesAsync(true);
 	}
 
 	private void connectionDropped(Networking client)
 	{
+		network = client;
 		Label disconnectedLabel = new Label();
 		disconnectedLabel.Text  = "You have been disconnected from the server.";
 		messages.Add(disconnectedLabel);
@@ -40,6 +43,7 @@ public partial class MainPage : ContentPage
 
 	private void messageArrived(Networking client, string text)
 	{
+		network = client;
 		Label messageLabel = new Label();
 		messageLabel.Text = text;
 		messages.Add(messageLabel);
