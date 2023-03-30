@@ -40,6 +40,7 @@ namespace Communications
             try
             {
                 client = new TcpClient(host, port);
+                client.Connect(host, port);
                 onConnect(this);
             }
             catch

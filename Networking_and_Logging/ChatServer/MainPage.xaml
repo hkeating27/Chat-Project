@@ -15,7 +15,8 @@
             <Button x:Name="serverShutdown" Text="Shutdown Server" HeightRequest="25" WidthRequest="400" />
         </VerticalStackLayout>
         <VerticalStackLayout>
-            <Entry x:Name="serverName" Text="Enter Server Name: " HorizontalOptions="Start" HeightRequest="25" WidthRequest="300"/>
+            <Entry x:Name="serverName" Text="Enter Server Name: " HorizontalOptions="Start" HeightRequest="25" 
+                                                    WidthRequest="300"/>
             <Entry x:Name="ipAddress" Text="Enter Server IP Address: " HorizontalOptions="Start" HeightRequest="25" WidthRequest="300"/>
             <Border HeightRequest="500" WidthRequest="600">
                 <VerticalStackLayout x:Name="allSentMessages">
