@@ -6,37 +6,43 @@ namespace ChatClient;
 public partial class MainPage : ContentPage
 {
 	//Field
-	private Networking client;
+	private Networking network;
 	private string serverName;
 	private string text;
 
 	public MainPage()
 	{
 		InitializeComponent();
-		client     = new Networking(new CustomFileLogger(), connectionComplete, connectionDropped, messageArrived, 
-									'\n');
+		network     = new Networking(new CustomFileLogger(), connectionComplete, connectionDropped, messageArrived, 
+									 '\n');
 		serverName = "";
 		text       = "";
 	}
 
 	private void ConnectToServer(object sender, EventArgs e)
 	{
-		client.Connect(serverName, 11000);
+		network.Connect(serverName, 11000);
 	}
 
 	private void connectionComplete(Networking client)
 	{
-
+		Label connectedLabel = new Label();
+		connectedLabel.Text  = "Connection Successful. You may now send messages.";
+		messages.Add(connectedLabel);
 	}
 
 	private void connectionDropped(Networking client)
 	{
-
+		Label disconnectedLabel = new Label();
+		disconnectedLabel.Text  = "You have been disconnected from the server.";
+		messages.Add(disconnectedLabel);
 	}
 
 	private void messageArrived(Networking client, string text)
 	{
-
+		Label messageLabel = new Label();
+		messageLabel.Text = text;
+		messages.Add(messageLabel);
 	}
 
 	private void ServerAddressChanged(object sender, EventArgs e)

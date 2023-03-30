@@ -25,7 +25,7 @@
                                                                       Completed="MessageCompleted"/>
             <Line HeightRequest="25" WidthRequest="50" />
             <Border HeightRequest="250" WidthRequest="700">
-                <VerticalStackLayout>
+                <VerticalStackLayout x:Name="messages">
                     <ScrollView Orientation="Vertical" VerticalScrollBarVisibility="Always"/>
                     <!-- As messages are sent, labels with those messages will be added -->
                 </VerticalStackLayout>

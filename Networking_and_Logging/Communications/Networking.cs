@@ -41,7 +41,7 @@ namespace Communications
             try
             {
                 client = new TcpClient(host, port);
-                client.Connect(host, port);
+                connectedClients.Add(client);
                 onConnect(this);
             }
             catch
