@@ -17,7 +17,7 @@ namespace Communications
         private CancellationTokenSource cancelToken;
         private char terminationChar;
         private List<TcpClient> connectedClients;
-        private TcpClient? client;
+        private TcpClient client;
         private ILogger logger;
 
         public string ID { get; set; }
@@ -33,6 +33,7 @@ namespace Communications
             this.onConnect        = onConnect;
             this.reportDisconnect = reportDisconnect;
             connectedClients      = new List<TcpClient>();
+            client                = new TcpClient();
         }
 
         public void Connect(string host, int port)
@@ -54,24 +55,21 @@ namespace Communications
         {
             try
             {
-                if (client != null)
+                NetworkStream clientStream = client.GetStream();
+                byte[] message = new byte[clientStream.Length];
+                if (infinite == true)
                 {
-                    NetworkStream clientStream = client.GetStream();
-                    byte[] message = new byte[clientStream.Length];
-                    if (infinite == true)
-                    {
-                        while (infinite)
-                        {
-                            await clientStream.ReadAsync(message, 0, message.Length, cancelToken.Token);
-                            onMessage(this, message.ToString());
-                        }
-                    }
-                    else
+                    while (infinite)
                     {
                         await clientStream.ReadAsync(message, 0, message.Length, cancelToken.Token);
                         onMessage(this, message.ToString());
-                        return;
                     }
+                }
+                else
+                {
+                    await clientStream.ReadAsync(message, 0, message.Length, cancelToken.Token);
+                    onMessage(this, message.ToString());
+                    return;
                 }
             }
             catch (ObjectDisposedException)
