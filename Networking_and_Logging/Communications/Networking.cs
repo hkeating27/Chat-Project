@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
+using System.Net;
 using System.Net.Sockets;
 using System.Text;
 
@@ -54,7 +55,9 @@ namespace Communications
         {
             try
             {
-                client = new TcpClient(host, port);
+                client = new TcpClient();
+                client.Connect(host, port);
+                logger.LogDebug("You connected successfully");
             }
             catch
             {
@@ -92,7 +95,8 @@ namespace Communications
 
         public async void WaitForClients(int port, bool infinte)
         {
-            TcpListener listener = new TcpListener(System.Net.IPAddress.Any, port);
+            TcpListener listener = new TcpListener(IPAddress.Any, port);
+            listener.Start();
             try
             {
                 while (infinte)

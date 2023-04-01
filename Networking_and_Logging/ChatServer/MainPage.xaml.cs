@@ -1,5 +1,6 @@
 ﻿using Communications;
 using FileLogger;
+using System.Net;
 
 namespace ChatServer
 {
@@ -18,7 +19,7 @@ namespace ChatServer
 
         private void connectionComplete(Networking chanel)
         {
-
+            
         }
 
         private void connectionDropped(Networking chanel)
@@ -27,6 +28,11 @@ namespace ChatServer
         }
 
         private void messageArrived(Networking chanel, string text)
+        {
+
+        }
+
+        private void createEndPoint(object sender, EventArgs e)
         {
 
         }
