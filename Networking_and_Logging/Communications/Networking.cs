@@ -36,19 +36,6 @@ namespace Communications
             client                = new TcpClient();
         }
 
-        public Networking(ILogger logger, TcpClient client, ReportConnectionEstablished onConnect, ReportDisconnect
-                           reportDisconnect, ReportMessageArrived onMessage, char terminationCharacter)
-        {
-            ID = "";
-            cancelSource = new CancellationTokenSource();
-            terminationChar = terminationCharacter;
-            this.logger = logger;
-            this.onMessage = onMessage;
-            this.onConnect = onConnect;
-            this.reportDisconnect = reportDisconnect;
-            this.client = client;
-        }
-
         public void Connect(string host, int port)
         {
             try

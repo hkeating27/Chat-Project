@@ -21,20 +21,18 @@ namespace ChatServer
             Thread startThread = new Thread(() => serverNetwork.WaitForClients(11000, true));
             startThread.Start();
             connectedClients.Add(serverNetwork);
-            //connect.Text = Dns.GetHostName();
-
         }
 
-        private void connectionComplete(Networking chanel)
+        private void connectionComplete(Networking channel)
         {
         }
 
-        private void connectionDropped(Networking chanel)
+        private void connectionDropped(Networking channel)
         {
 
         }
 
-        private void messageArrived(Networking chanel, string text)
+        private void messageArrived(Networking channel, string text)
         {
 
         }
