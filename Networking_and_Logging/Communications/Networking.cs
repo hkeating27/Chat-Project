@@ -35,7 +35,7 @@ namespace Communications
             client                = new TcpClient();
         }
 
-        private Networking(ILogger logger, TcpClient client, ReportConnectionEstablished onConnect, ReportDisconnect
+        public Networking(ILogger logger, TcpClient client, ReportConnectionEstablished onConnect, ReportDisconnect
                            reportDisconnect, ReportMessageArrived onMessage, char terminationCharacter)
         {
             ID = "";

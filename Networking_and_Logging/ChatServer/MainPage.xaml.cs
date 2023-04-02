@@ -18,6 +18,8 @@ namespace ChatServer
             connectedClients = new List<Networking>();
             Thread startThread = new Thread(() => serverNetwork.WaitForClients(11000, true));
             startThread.Start();
+            connectedClients.Add(serverNetwork);
+            serverShutdown.Text = "Hunter";
         }
 
         private void connectionComplete(Networking chanel)
