@@ -17,7 +17,7 @@ namespace ChatClient {
         public MainPage()
 		{
 			InitializeComponent();
-			network = new Networking(new CustomFileLogger("Information", "clientLogging"), client, connectionComplete, connectionDropped, messageArrived,
+			network = new Networking(new CustomFileLogger("Information", "clientLogging"), connectionComplete, connectionDropped, messageArrived,
 										 '\n');
 
 			serverName = "localhost";

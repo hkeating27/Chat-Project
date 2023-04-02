@@ -1,6 +1,8 @@
 ﻿using Communications;
 using FileLogger;
+using Microsoft.Extensions.Logging;
 using System.Net;
+using System.Net.Sockets;
 
 namespace ChatServer
 {
@@ -19,6 +21,8 @@ namespace ChatServer
             Thread startThread = new Thread(() => serverNetwork.WaitForClients(11000, true));
             startThread.Start();
             connectedClients.Add(serverNetwork);
+            //connect.Text = Dns.GetHostName();
+
         }
 
         private void connectionComplete(Networking chanel)
