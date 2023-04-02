@@ -4,13 +4,13 @@ namespace FileLogger
 {
     public class CustomFileLogger : ILogger
     {
-        private string categoryName;
+        private readonly string categoryName;
         private string fileName;
 
-        public CustomFileLogger(string categoryName)
+        public CustomFileLogger(string categoryName, string fileName)
         {
             this.categoryName = categoryName;
-
+            this.fileName     = fileName;
         }
 
         //Skipped as described

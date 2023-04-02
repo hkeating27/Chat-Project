@@ -17,7 +17,6 @@ namespace Communications
         private ReportConnectionEstablished onConnect;
         private CancellationTokenSource cancelSource;
         private char terminationChar;
-        private List<Networking> connectedClients;
         private TcpClient client;
         private ILogger logger;
 
@@ -33,7 +32,6 @@ namespace Communications
             this.onMessage        = onMessage;
             this.onConnect        = onConnect;
             this.reportDisconnect = reportDisconnect;
-            connectedClients      = new List<Networking>();
             client                = new TcpClient();
         }
 
@@ -47,7 +45,6 @@ namespace Communications
             this.onMessage = onMessage;
             this.onConnect = onConnect;
             this.reportDisconnect = reportDisconnect;
-            connectedClients = new List<Networking>();
             this.client = client;
         }
 
@@ -55,14 +52,14 @@ namespace Communications
         {
             try
             {
-                client = new TcpClient();
-                client.Connect(host, port);
-                logger.LogDebug("You connected successfully");
+                client = new TcpClient(Dns.GetHostName(), port);
+                throw new Exception("Connection was successful!");
             }
             catch
             {
-                logger.LogError("There was a problem connecting to the server. Check to make sure the given " +
-                                "host and port are correct.");
+                /*logger.LogError("There was a problem connecting to the server. Check to make sure the given " +
+                                "host and port are correct.");*/
+                throw new Exception("Connection was unsuccessful.");
             }
         }
 
@@ -104,7 +101,6 @@ namespace Communications
                     TcpClient connection = await listener.AcceptTcpClientAsync(cancelSource.Token);
                     Networking newConnection = new Networking(logger, connection, onConnect, reportDisconnect,
                                                               onMessage, terminationChar);
-                    connectedClients.Add(newConnection);
                     onConnect(newConnection);
                 }
             }

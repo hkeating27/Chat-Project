@@ -8,12 +8,12 @@ using System.Threading.Tasks;
 
 namespace FileLogger
 {
-    public class CustomeFileLoggerProvider : ILoggerProvider
+    public class CustomFileLoggerProvider : ILoggerProvider
     {
 
         public ILogger CreateLogger(string categoryName)
         {         
-            return new CustomFileLogger(categoryName);
+            return new CustomFileLogger(categoryName, "logging");
         }
 
         //No need to implement if we use appendalltext

@@ -1,5 +1,7 @@
 ﻿using Communications;
 using FileLogger;
+using Microsoft.Extensions.Logging;
+using System.Net;
 
 namespace ChatClient;
 
@@ -13,15 +15,15 @@ public partial class MainPage : ContentPage
 	public MainPage()
 	{
 		InitializeComponent();
-		network     = new Networking(new CustomFileLogger(), connectionComplete, connectionDropped, messageArrived, 
+		network     = new Networking(new CustomFileLogger("Information", "clientLogging"), connectionComplete, connectionDropped, messageArrived, 
 									 '\n');
-		serverName = "";
-		text = "";
+		serverName  = "localhost";
+		text        = "";
 	}
 
 	private void ConnectToServer(object sender, EventArgs e)
 	{
-		network.Connect(serverName, 11000);
+		network.Connect(Dns.GetHostName(), 11000);
 	}
 
 	private void connectionComplete(Networking client)

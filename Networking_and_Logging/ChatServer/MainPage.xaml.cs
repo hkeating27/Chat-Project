@@ -8,13 +8,16 @@ namespace ChatServer
     {
         //Field
         Networking serverNetwork;
+        List<Networking> connectedClients;
 
         public MainPage()
         {
             InitializeComponent();
-            serverNetwork = new Networking(new CustomFileLogger(), connectionComplete, connectionDropped,
+            serverNetwork = new Networking(new CustomFileLogger("Information", "serverLogging"), connectionComplete, connectionDropped,
                                            messageArrived, '\n');
-            serverNetwork.WaitForClients(11000, true);
+            connectedClients = new List<Networking>();
+            Thread startThread = new Thread(() => serverNetwork.WaitForClients(11000, true));
+            startThread.Start();
         }
 
         private void connectionComplete(Networking chanel)

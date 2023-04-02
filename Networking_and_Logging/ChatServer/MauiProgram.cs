@@ -1,5 +1,6 @@
 ﻿// FileLogger;
 using Microsoft.Extensions.Logging;
+using FileLogger;
 
 namespace ChatServer
 {
@@ -14,14 +15,14 @@ namespace ChatServer
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
-                });
-                /*.Services.AddLogging(configure =>
+                })
+                .Services.AddLogging(configure =>
                  {
                      configure.AddDebug();
-                     configure.AddProvider(new FileLoggerProvider());
+                     configure.AddProvider(new CustomFileLoggerProvider());
                      configure.SetMinimumLevel(LogLevel.Debug);
                  })
-                .AddTransient<MainPage>();*/
+                .AddTransient<MainPage>();
 
             return builder.Build();
         }
