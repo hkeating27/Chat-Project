@@ -19,12 +19,10 @@ namespace ChatServer
             Thread startThread = new Thread(() => serverNetwork.WaitForClients(11000, true));
             startThread.Start();
             connectedClients.Add(serverNetwork);
-            serverShutdown.Text = "Hunter";
         }
 
         private void connectionComplete(Networking chanel)
         {
-            
         }
 
         private void connectionDropped(Networking chanel)
