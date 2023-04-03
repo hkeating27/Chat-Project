@@ -4,7 +4,7 @@
 **GitHub IDs:** NSwimer1321 and hkeating27
 **Repo:** https://github.com/uofu-cs3500-spring23/assignment-seven---chatting-bluemangroup
 **Date:** 02/02/2023 Time: 11:48 pm
-**Project Name:** ChatClient
+**Project Name:** FileLogger
 **Copyright:** CS 3500 and Nathaniel Taylor - This work may not be copied for use in Academic Coursework
 
 
@@ -13,8 +13,9 @@ My work stands on its own.
 
 
 **Assignment Specific Topics:**
-I don't really have any comments on this assignment. It was enjoyable and allowed me to
-think even more in a SE mindset.
+The File Logging portion of this assignment was by far the easiest. It didn't really take much more than
+what we learned in the lab and what was given in the assignment description. We didn't really have any problems
+with it, so there aren't really many comments.
 
 
 **Consulted Peers:**
@@ -23,5 +24,4 @@ if I had a question and asked a question myself.
 
 
 **References:**
-No references used besides my brain, lectures, and Piazza. I also used the Formula shell that
-was given in the assignment details.
+No references used besides my brain, lectures, and Piazza.
