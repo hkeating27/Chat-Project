@@ -1,6 +1,8 @@
 ﻿using Communications;
 using FileLogger;
+using Microsoft.Extensions.Logging;
 using System.Net;
+using System.Net.Sockets;
 
 namespace ChatServer
 {
@@ -26,19 +28,19 @@ namespace ChatServer
             connectedClients = new List<Networking>();
             Thread startThread = new Thread(() => serverNetwork.WaitForClients(11000, true));
             startThread.Start();
+            connectedClients.Add(serverNetwork);
         }
 
-        private void connectionComplete(Networking chanel)
+        private void connectionComplete(Networking channel)
         {
-            
         }
 
-        private void connectionDropped(Networking chanel)
+        private void connectionDropped(Networking channel)
         {
 
         }
 
-        private void messageArrived(Networking chanel, string text)
+        private void messageArrived(Networking channel, string text)
         {
             foreach (Networking client in  connectedClients)
             {

@@ -2,9 +2,9 @@
 using FileLogger;
 using Microsoft.Extensions.Logging;
 using System.Net;
+using System.Net.Sockets;
 
-namespace ChatClient
-{
+namespace ChatClient {
 
 	public partial class MainPage : ContentPage
 	{
@@ -12,6 +12,7 @@ namespace ChatClient
 		private Networking network;
 		private string serverName;
 		private string text;
+		TcpClient client;
 
 		/// <summary>
 		/// Initializes the GUI, creates a new Networking object, and initializes the
