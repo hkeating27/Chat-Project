@@ -23,7 +23,8 @@ namespace ChatClient {
 			InitializeComponent();
 			network = new Networking(new CustomFileLogger("Information", "clientLogging"), connectionComplete,
 										 connectionDropped, messageArrived, '\n');
-			serverName = "localhost";
+			serverAdd.Text = "localhost";
+			serverName = Dns.GetHostName();
 			text = "";
 		}
 
@@ -34,8 +35,8 @@ namespace ChatClient {
 		/// <param name="e">The Event Arguments of the event that triggers this method</param>
 		private void ConnectToServer(object sender, EventArgs e)
 		{
-			network.Connect(Dns.GetHostName(), 11000);
-		}
+			network.Connect(serverName, 11000);
+        }
 
 		/// <summary>
 		/// The callback method that the Networking object calls whenever this client connects to the server
@@ -47,7 +48,8 @@ namespace ChatClient {
 			Label connectedLabel = new Label();
 			connectedLabel.Text = "Connection Successful. You may now send messages to the server.";
 			messages.Add(connectedLabel);
-			network.AwaitMessagesAsync(true);
+			Thread messagesThread = new Thread(() => network.AwaitMessagesAsync(true));
+			messagesThread.Start();
 		}
 
 		/// <summary>

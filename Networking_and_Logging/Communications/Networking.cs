@@ -176,8 +176,7 @@ namespace Communications
                 text += terminationChar;
                 NetworkStream clientStream = client.GetStream();
                 byte[] message = Encoding.UTF8.GetBytes(text);
-                CancellationTokenSource source = new CancellationTokenSource(terminationChar);
-                await clientStream.WriteAsync(message, 0, message.Length, source.Token);
+                await clientStream.WriteAsync(message, 0, message.Length);
             }
         }
     }
