@@ -83,7 +83,7 @@ namespace Communications
                 string ipAddress = Dns.GetHostEntry(Dns.GetHostName()).AddressList[0].ToString();
 
                 client = new TcpClient(Dns.GetHostName(), 11000);
-
+                
             }
             catch (Exception e)
             {
