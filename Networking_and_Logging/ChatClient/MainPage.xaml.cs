@@ -34,6 +34,8 @@ namespace ChatClient {
 		/// <param name="e">The Event Arguments of the event that triggers this method</param>
 		private void ConnectToServer(object sender, EventArgs e)
 		{
+			Label beginConnection = new Label();
+			beginConnection.Text = "Connecting...";
 			network.Connect(serverName, 11000);
         }
 
@@ -44,11 +46,11 @@ namespace ChatClient {
 		private void connectionComplete(Networking client)
 		{
 			//network = client;
-			Label connectedLabel = new Label();
-			connectedLabel.Text = "Connection Successful. You may now send messages to the server.";
-			messages.Add(connectedLabel);
-			Thread messagesThread = new Thread(() => network.AwaitMessagesAsync(true));
-			messagesThread.Start();
+			Label connected = new Label();
+			connected.Text = "Connection successful.";
+			sentMessages.Add(connected);
+
+			network.AwaitMessagesAsync(true);
 		}
 
 		/// <summary>
@@ -61,7 +63,7 @@ namespace ChatClient {
 			//network = client;
 			Label disconnectedLabel = new Label();
 			disconnectedLabel.Text = "You have been disconnected from the server.";
-			messages.Add(disconnectedLabel);
+			sentMessages.Add(disconnectedLabel);
 		}
 
 		/// <summary>
@@ -75,7 +77,7 @@ namespace ChatClient {
 			network = client;
 			Label messageLabel = new Label();
 			messageLabel.Text = text;
-			messages.Add(messageLabel);
+			sentMessages.Add(messageLabel);
 		}
 
         /// <summary>

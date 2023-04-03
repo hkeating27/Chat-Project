@@ -24,22 +24,29 @@
             <Entry x:Name="message" HorizontalOptions="Start" HeightRequest="25" WidthRequest="700"
                                                                       Completed="MessageCompleted"/>
             <Line HeightRequest="25" WidthRequest="50" />
-            <Border HeightRequest="250" WidthRequest="700">
-                <VerticalStackLayout x:Name="messages">
-                    <ScrollView Orientation="Vertical" VerticalScrollBarVisibility="Always"/>
-                    <!-- As messages are sent, labels with those messages will be added -->
+            <ScrollView 
+                HeightRequest="250" 
+                WidthRequest="700" 
+                VerticalScrollBarVisibility="Always" 
+                Orientation="Both"
+                Margin='20'>
+                <VerticalStackLayout x:Name="sentMessages">
+                    
                 </VerticalStackLayout>
-            </Border>
-                
+            </ScrollView>
         </VerticalStackLayout>
+        
         <Line HeightRequest="25" WidthRequest="200" />
         <VerticalStackLayout>
             <Line HeightRequest="100" WidthRequest="50" />
-            <Border HeightRequest="300" WidthRequest="350">
+            <Border
+                HeightRequest="300" 
+                WidthRequest="350">
                 <VerticalStackLayout>
                     <!-- When the RetrieveParticipants button is clicked, labels with those participants will be added-->
                 </VerticalStackLayout>
             </Border>
+            
             <Line HeightRequest="15" WidthRequest="15"/>
             <Button x:Name="retrieveParticipants" Text="Retrieve Participants" HeightRequest="25" WidthRequest="200"/>
         </VerticalStackLayout>

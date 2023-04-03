@@ -34,6 +34,9 @@ namespace ChatServer
         private void connectionComplete(Networking channel)
         {
             connectedClients.Add(channel);
+            Label someoneConnected = new Label();
+            someoneConnected.Text = "Someone has connected";
+            allSentMessages.Add(someoneConnected);
         }
 
         private void connectionDropped(Networking channel)
