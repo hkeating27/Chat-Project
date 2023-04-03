@@ -10,9 +10,17 @@ namespace ChatServer
         Networking serverNetwork;
         List<Networking> connectedClients;
 
+        /// <summary>
+        /// Initializes the GUI, sets the server up to work on the local host, creates a new Networking object, 
+        /// initializes the list of Networking objects, and creates a new thread that the server will wait 
+        /// for clients on.
+        /// </summary>
         public MainPage()
         {
             InitializeComponent();
+            serverName.Text = Dns.GetHostName();
+            ipAddress.Text = Dns.GetHostEntry(Dns.GetHostName()).AddressList[1].ToString();
+
             serverNetwork = new Networking(new CustomFileLogger("Information", "serverLogging"), connectionComplete, connectionDropped,
                                            messageArrived, '\n');
             connectedClients = new List<Networking>();
@@ -32,12 +40,10 @@ namespace ChatServer
 
         private void messageArrived(Networking chanel, string text)
         {
-
-        }
-
-        private void createEndPoint(object sender, EventArgs e)
-        {
-
+            foreach (Networking client in  connectedClients)
+            {
+                client.Send(text);
+            }
         }
     }
 }

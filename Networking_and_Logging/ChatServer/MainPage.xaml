@@ -15,11 +15,19 @@
             <Button x:Name="serverShutdown" Text="Shutdown Server" HeightRequest="25" WidthRequest="400" />
         </VerticalStackLayout>
         <VerticalStackLayout>
-            <Entry x:Name="serverName" Text="Enter Server Name: " HorizontalOptions="Start" HeightRequest="25" 
+            <Label Text="Server Name:" />
+            <Line HeightRequest="5" WidthRequest="5"/>
+            <Entry x:Name="serverName" Text="" HorizontalOptions="Start" HeightRequest="25" 
                                                     WidthRequest="300"/>
-            <Entry x:Name="ipAddress" Text="Enter Server IP Address: " HorizontalOptions="Start" HeightRequest="25" 
-                                                    WidthRequest="300" Completed="createEndPoint"/>
-            <Border HeightRequest="500" WidthRequest="600">
+
+            <Line HeightRequest="5" WidthRequest="5"/>
+            <Label Text="Server IP Address:"/>
+            <Line HeightRequest="5" WidthRequest="5"/>
+            <Entry x:Name="ipAddress" Text="" HorizontalOptions="Start" HeightRequest="25" 
+                                                    WidthRequest="300"/>
+
+            <Line HeightRequest="5" WidthRequest="5"/>
+            <Border HeightRequest="450" WidthRequest="600">
                 <VerticalStackLayout x:Name="allSentMessages">
                     <ScrollView Orientation="Vertical" VerticalScrollBarVisibility="Always"/>
                     <!-- As messages are sent, labels with those messages will be added-->
