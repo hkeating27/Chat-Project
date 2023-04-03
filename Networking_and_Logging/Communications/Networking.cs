@@ -82,7 +82,7 @@ namespace Communications
             {
                 string ipAddress = Dns.GetHostEntry(Dns.GetHostName()).AddressList[0].ToString();
 
-                client = new TcpClient(ipAddress, port);
+                client = new TcpClient("MJOLLNIR", 11000);
                 throw new Exception("Connection was successful!");
             }
             catch (Exception e)
