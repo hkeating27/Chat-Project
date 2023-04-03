@@ -18,11 +18,10 @@ namespace ChatClient {
 		/// Initializes the GUI, creates a new Networking object, and initializes the
 		/// serverName and text fields.
 		/// </summary>
-		public MainPage()
+		public MainPage(ILogger<MainPage> logger)
 		{
 			InitializeComponent();
-			network = new Networking(new CustomFileLogger("Information", "clientLogging"), connectionComplete,
-										 connectionDropped, messageArrived, '\n');
+			network = new Networking(logger, connectionComplete, connectionDropped, messageArrived, '\n');
 			serverAdd.Text = "localhost";
 			serverName = Dns.GetHostName();
 			text = "";

@@ -17,15 +17,15 @@ namespace ChatServer
         /// initializes the list of Networking objects, and creates a new thread that the server will wait 
         /// for clients on.
         /// </summary>
-        public MainPage()
+        public MainPage(ILogger<MainPage> logger)
         {
             InitializeComponent();
             serverName.Text = Dns.GetHostName();
             ipAddress.Text = Dns.GetHostEntry(Dns.GetHostName()).AddressList[1].ToString();
 
-            serverNetwork = new Networking(new CustomFileLogger("Information", "serverLogging"), connectionComplete, connectionDropped,
-                                           messageArrived, '\n');
+            serverNetwork = new Networking(logger, connectionComplete, connectionDropped, messageArrived, '\n');
             connectedClients = new List<Networking>();
+
             Thread startThread = new Thread(() => serverNetwork.WaitForClients(11000, true));
             startThread.Start();
             connectedClients.Add(serverNetwork);
@@ -33,11 +33,12 @@ namespace ChatServer
 
         private void connectionComplete(Networking channel)
         {
+            connectedClients.Add(channel);
         }
 
         private void connectionDropped(Networking channel)
         {
-
+            connectedClients.Remove(channel);
         }
 
         private void messageArrived(Networking channel, string text)
