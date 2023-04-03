@@ -43,7 +43,7 @@ namespace ChatClient {
 		/// <param name="client">The client that connected to the server</param>
 		private void connectionComplete(Networking client)
 		{
-			network = client;
+			//network = client;
 			Label connectedLabel = new Label();
 			connectedLabel.Text = "Connection Successful. You may now send messages to the server.";
 			messages.Add(connectedLabel);
@@ -58,7 +58,7 @@ namespace ChatClient {
 		/// <param name="client">The specified client</param>
 		private void connectionDropped(Networking client)
 		{
-			network = client;
+			//network = client;
 			Label disconnectedLabel = new Label();
 			disconnectedLabel.Text = "You have been disconnected from the server.";
 			messages.Add(disconnectedLabel);
