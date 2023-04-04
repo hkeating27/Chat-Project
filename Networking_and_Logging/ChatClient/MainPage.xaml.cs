@@ -1,6 +1,7 @@
 ﻿using Communications;
 using FileLogger;
 using Microsoft.Extensions.Logging;
+using Microsoft.Maui.Controls.Internals;
 using System.Net;
 using System.Net.Sockets;
 
@@ -36,6 +37,7 @@ namespace ChatClient {
 		{
 			Label beginConnection = new Label();
 			beginConnection.Text = "Connecting...";
+			sentMessages.Add(beginConnection);
 			network.Connect(serverName, 11000);
         }
 
@@ -98,6 +100,7 @@ namespace ChatClient {
         private void MessageCompleted(object sender, EventArgs e)
 		{
 			text = (sender as Entry).Text;
+			network.Send(text);
 		}
 	}
 }

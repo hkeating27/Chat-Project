@@ -162,6 +162,7 @@ namespace Communications
         /// </summary>
         public void Disconnect()
         {
+            reportDisconnect(this);
             client.Close();
         }
 

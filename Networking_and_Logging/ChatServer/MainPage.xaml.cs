@@ -42,6 +42,9 @@ namespace ChatServer
         private void connectionDropped(Networking channel)
         {
             connectedClients.Remove(channel);
+            Label someoneDisconnected = new Label();
+            someoneDisconnected.Text = "Someone has disconnected";
+            allSentMessages.Add(someoneDisconnected);
         }
 
         private void messageArrived(Networking channel, string text)
@@ -50,6 +53,15 @@ namespace ChatServer
             {
                 client.Send(text);
             }
+            Label someoneSentMsg = new Label();
+            someoneSentMsg.Text = "Someone has sent a message";
+            allSentMessages.Add(someoneSentMsg);
+        }
+
+        private void ServerShutdown(object sender, EventArgs e)
+        {
+            foreach (Networking client in connectedClients)
+                client.Disconnect();
         }
     }
 }

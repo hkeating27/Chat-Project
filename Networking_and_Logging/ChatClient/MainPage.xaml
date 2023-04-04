@@ -24,16 +24,19 @@
             <Entry x:Name="message" HorizontalOptions="Start" HeightRequest="25" WidthRequest="700"
                                                                       Completed="MessageCompleted"/>
             <Line HeightRequest="25" WidthRequest="50" />
-            <ScrollView 
-                HeightRequest="250" 
-                WidthRequest="700" 
-                VerticalScrollBarVisibility="Always" 
-                Orientation="Both"
-                Margin='20'>
-                <VerticalStackLayout x:Name="sentMessages">
-                    
-                </VerticalStackLayout>
-            </ScrollView>
+            <Border HeightRequest="250" WidthRequest="700">
+                <ScrollView
+                    HeightRequest="250" 
+                    WidthRequest="700"
+                    IsVisible="True"
+                    VerticalScrollBarVisibility="Always"
+                    VerticalOptions="FillAndExpand"
+                    Orientation="Vertical">
+                    <VerticalStackLayout x:Name="sentMessages">
+                        <Label Text="Why does this work?"/>
+                    </VerticalStackLayout>
+                </ScrollView>
+            </Border>
         </VerticalStackLayout>
         
         <Line HeightRequest="25" WidthRequest="200" />
