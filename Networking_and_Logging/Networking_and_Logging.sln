@@ -9,12 +9,14 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChatServer", "ChatServer\Ch
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Communications", "Communications\Communications.csproj", "{A8F6E9E8-46FF-41ED-A3AD-4EB51BC4CD9B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileLogger", "..\FileLogger\FileLogger.csproj", "{13FED9C5-F11C-470A-90EC-56FA75D34947}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FileLogger", "..\FileLogger\FileLogger.csproj", "{13FED9C5-F11C-470A-90EC-56FA75D34947}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{24C7910A-17A1-4DD1-9765-08F3EAA10B73}"
 	ProjectSection(SolutionItems) = preProject
 		README.txt = README.txt
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Networking_Tests", "Networking_Tests\Networking_Tests.csproj", "{0FF83DDE-C682-43D0-960B-0664D6C89A5C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -42,6 +44,10 @@ Global
 		{13FED9C5-F11C-470A-90EC-56FA75D34947}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{13FED9C5-F11C-470A-90EC-56FA75D34947}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{13FED9C5-F11C-470A-90EC-56FA75D34947}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0FF83DDE-C682-43D0-960B-0664D6C89A5C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0FF83DDE-C682-43D0-960B-0664D6C89A5C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0FF83DDE-C682-43D0-960B-0664D6C89A5C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0FF83DDE-C682-43D0-960B-0664D6C89A5C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

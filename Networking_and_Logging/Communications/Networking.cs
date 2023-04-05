@@ -107,18 +107,23 @@ namespace Communications
                 {
                     while (infinite)
                     {
-                        await clientStream.ReadAsync(message, 0, message.Length);
+                        int total = await clientStream.ReadAsync(message, 0, message.Length);
+                        if (total == 0)
+                            throw new Exception("You have been disconnected.");
                         onMessage(this, message.ToString());
                     }
                 }
                 else
                 {
-                    await clientStream.ReadAsync(message, 0, message.Length);
+                    int total = await clientStream.ReadAsync(message, 0, message.Length);
+
+                    if (total == 0)
+                        throw new Exception("You have been disconnected.");
                     onMessage(this, message.ToString());
                     return;
                 }
             }
-            catch (ObjectDisposedException)
+            catch (Exception)
             {
                 reportDisconnect(this);
             }
