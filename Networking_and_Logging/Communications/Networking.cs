@@ -75,15 +75,15 @@ namespace Communications
         /// </summary>
         /// <param name="host">the host name of the server</param>
         /// <param name="port">the port the host is connected to</param>
-        /// <exception cref="Exception">Used only for debugging</exception>
+        /// <exception cref="Exception">Used only for debugging and logging</exception>
         public void Connect(string host, int port)
         {
             try
             {
-                string ipAddress = Dns.GetHostEntry(Dns.GetHostName()).AddressList[0].ToString();
-
-                client = new TcpClient(Dns.GetHostName(), 11000);
-                
+                client = new TcpClient(host, port);
+                EndPoint? remoteEndPoint = client.GetStream().Socket.RemoteEndPoint;
+                if (remoteEndPoint != null)
+                    ID = remoteEndPoint.ToString();
             }
             catch (Exception e)
             {
@@ -145,12 +145,14 @@ namespace Communications
                     TcpClient connection = await listener.AcceptTcpClientAsync(cancelSource.Token);
                     Networking newConnection = new Networking(logger, connection, onConnect, reportDisconnect,
                                                               onMessage, terminationChar);
-                    onConnect(newConnection);
+                    throw new Exception("Connection has completed");
+                    //onConnect(newConnection);
                 }
             }
-            catch
+            catch (Exception e)
             {
                 listener.Stop();
+                throw new Exception(e.Message);
             }
         }
 

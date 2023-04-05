@@ -13,7 +13,8 @@
             
             <Line HeightRequest="25" WidthRequest="50" />
             <Label Text="Enter Name Below"/>
-            <Entry x:Name="name" HorizontalOptions="Start" HeightRequest="25" WidthRequest="700"/>
+            <Entry x:Name="name" HorizontalOptions="Start" HeightRequest="25" WidthRequest="700"
+                                                                              Completed="ChangeID"/>
             
             <Line HeightRequest="25" WidthRequest="50" />
             <Button x:Name="connect" HorizontalOptions="Start" Text="Connect to Server" 

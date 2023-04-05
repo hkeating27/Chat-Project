@@ -53,6 +53,7 @@ namespace ChatServer
             {
                 client.Send(text);
             }
+
             Label someoneSentMsg = new Label();
             someoneSentMsg.Text = "Someone has sent a message";
             allSentMessages.Add(someoneSentMsg);
@@ -62,6 +63,7 @@ namespace ChatServer
         {
             foreach (Networking client in connectedClients)
                 client.Disconnect();
+            connectedClients.Clear();
         }
     }
 }

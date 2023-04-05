@@ -102,6 +102,11 @@ namespace ChatClient {
 			text = (sender as Entry).Text;
 			network.Send(text);
 		}
+
+		private void ChangeID(object sender, EventArgs e)
+		{
+			network.ID = (sender as Entry).Text;
+		}
 	}
 }
 
