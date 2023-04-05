@@ -37,6 +37,9 @@ namespace ChatServer
             Label someoneConnected = new Label();
             someoneConnected.Text = "Someone has connected";
             allSentMessages.Add(someoneConnected);
+
+            if (connectedClients.Count >= 25)
+                serverNetwork.StopWaitingForClients();
         }
 
         private void connectionDropped(Networking channel)
