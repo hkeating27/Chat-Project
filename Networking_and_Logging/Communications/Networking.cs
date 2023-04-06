@@ -60,7 +60,7 @@ namespace Communications
         private Networking(ILogger logger, TcpClient client, ReportConnectionEstablished onConnect, ReportDisconnect
                            reportDisconnect, ReportMessageArrived onMessage, char terminationCharacter)
         {
-            ID = "";
+            ID = client.GetStream().Socket.RemoteEndPoint.ToString();
             cancelSource = new CancellationTokenSource();
             terminationChar = terminationCharacter;
             this.logger = logger;
@@ -82,8 +82,9 @@ namespace Communications
             {
                 client = new TcpClient(host, port);
                 EndPoint? remoteEndPoint = client.GetStream().Socket.RemoteEndPoint;
-                if (remoteEndPoint != null)
+                if (remoteEndPoint != null && ID == "")
                     ID = remoteEndPoint.ToString();
+                onConnect(this);
             }
             catch (Exception e)
             {
@@ -123,7 +124,7 @@ namespace Communications
                     return;
                 }
             }
-            catch (Exception)
+            catch
             {
                 reportDisconnect(this);
             }
@@ -145,14 +146,12 @@ namespace Communications
                     TcpClient connection = await listener.AcceptTcpClientAsync(cancelSource.Token);
                     Networking newConnection = new Networking(logger, connection, onConnect, reportDisconnect,
                                                               onMessage, terminationChar);
-                    throw new Exception("Connection has completed");
-                    //onConnect(newConnection);
+                    onConnect(newConnection);
                 }
             }
-            catch (Exception e)
+            catch
             {
                 listener.Stop();
-                throw new Exception(e.Message);
             }
         }
 

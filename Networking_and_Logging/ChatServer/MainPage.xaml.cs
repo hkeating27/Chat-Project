@@ -35,8 +35,8 @@ namespace ChatServer
         {
             connectedClients.Add(channel);
             Label someoneConnected = new Label();
-            someoneConnected.Text = "Someone has connected";
-            allSentMessages.Add(someoneConnected);
+            someoneConnected.Text = channel.ID + " has connected";
+            Application.Current.Dispatcher.Dispatch((Action)(() => allSentMessages.Add(someoneConnected)));
 
             if (connectedClients.Count >= 25)
                 serverNetwork.StopWaitingForClients();

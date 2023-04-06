@@ -23,4 +23,4 @@ if I had a question and asked a question myself.
 
 
 **References:**
-No references used besides my brain, lectures, and Piazza.
+https://stackoverflow.com/questions/3360555/how-to-pass-parameters-to-threadstart-method-in-thread#:~:text=The%20simplest%20is%20just%20string%20filename%20%3D...%20Thread,needing%20to%20cast%20from%20object%20all%20the%20time.

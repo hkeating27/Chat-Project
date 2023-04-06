@@ -1,5 +1,6 @@
 using Communications;
 using Microsoft.Extensions.Logging.Abstractions;
+using System.Net;
 
 namespace Networking_Tests
 {
@@ -10,10 +11,10 @@ namespace Networking_Tests
         public void TestMethod1()
         {
             Networking server = new Networking(NullLogger.Instance, newClient, s => { ; }, messageRecieved, '\n' );
-            server.WaitForClients(11000, false);
+            server.WaitForClients(11000, true);
 
             Networking client = new Networking(NullLogger.Instance, clientConnect, s => { ; }, (a, s) => { ; }, '\n');
-            client.Connect("localhost", 11000);
+            client.Connect(Dns.GetHostName(), 11000);
         }
 
         public void newClient(Networking client)

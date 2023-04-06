@@ -13,7 +13,6 @@ namespace ChatClient {
 		private Networking network;
 		private string serverName;
 		private string text;
-		TcpClient client;
 
 		/// <summary>
 		/// Initializes the GUI, creates a new Networking object, and initializes the
@@ -47,12 +46,12 @@ namespace ChatClient {
 		/// <param name="client">The client that connected to the server</param>
 		private void connectionComplete(Networking client)
 		{
-			//network = client;
-			Label connected = new Label();
+            Label connected = new Label();
 			connected.Text = "Connection successful.";
 			sentMessages.Add(connected);
 
-			network.AwaitMessagesAsync(true);
+			Thread messagingThread = new Thread(() => network.AwaitMessagesAsync(infinite:true));
+			messagingThread.Start();
 		}
 
 		/// <summary>
@@ -62,7 +61,6 @@ namespace ChatClient {
 		/// <param name="client">The specified client</param>
 		private void connectionDropped(Networking client)
 		{
-			//network = client;
 			Label disconnectedLabel = new Label();
 			disconnectedLabel.Text = "You have been disconnected from the server.";
 			sentMessages.Add(disconnectedLabel);
@@ -79,7 +77,7 @@ namespace ChatClient {
 			network = client;
 			Label messageLabel = new Label();
 			messageLabel.Text = text;
-			sentMessages.Add(messageLabel);
+			Application.Current.Dispatcher.Dispatch((Action)(() => sentMessages.Add(messageLabel)));
 		}
 
         /// <summary>
@@ -103,6 +101,11 @@ namespace ChatClient {
 			network.Send(text);
 		}
 
+		/// <summary>
+		/// Changes the ID property of the client's Networking object
+		/// </summary>
+		/// <param name="sender">The entry sending the event that triggers this method</param>
+		/// <param name="e">The Event Arguments of the event that triggers this method</param>
 		private void ChangeID(object sender, EventArgs e)
 		{
 			network.ID = (sender as Entry).Text;
