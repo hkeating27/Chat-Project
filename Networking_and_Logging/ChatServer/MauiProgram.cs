@@ -20,7 +20,7 @@ namespace ChatServer
                  {
                      configure.AddDebug();
                      configure.AddProvider(new CustomFileLoggerProvider());
-                     configure.SetMinimumLevel(LogLevel.Debug);
+                     configure.SetMinimumLevel(LogLevel.Information);
                  })
                 .AddTransient<MainPage>();
 

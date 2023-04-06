@@ -6,6 +6,14 @@ using System.Text;
 
 namespace Communications
 {
+    /// <summary>
+    /// This class represents an object used by the client and server GUIs to connect a client to a server,
+    /// create a server that listens for connections and accepts them, allow clients to wait for messages, allow
+    /// clients to send messages, allow a client to be disconnected, and allow a server to stop allowing clients
+    /// to connect.
+    /// Written By: Nathaniel Taylor and Hunter Keating
+    /// Debugged By: Hunter Keating and Nathaniel Taylor
+    /// </summary>
     public class Networking
     {
         //Delegates
@@ -91,8 +99,8 @@ namespace Communications
             }
             catch (Exception e)
             {
-                logger.LogInformation("There was a problem connecting to the server. Check to make sure the given " +
-                                "host and port are correct.");
+                string message = e.Message;
+                logger.LogInformation(message);
             }
         }
 
@@ -186,6 +194,8 @@ namespace Communications
                 buffer = Encoding.UTF8.GetBytes(text);
                 NetworkStream clientStream = client.GetStream();
                 await clientStream.WriteAsync(buffer);
+
+                logger.LogInformation("A message has successfully been sent.");
             }
         }
     }

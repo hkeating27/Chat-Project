@@ -8,12 +8,18 @@ using System.Threading.Channels;
 
 namespace ChatClient {
 
+	/// <summary>
+	/// This class represents the logic behind the GUI of a client
+	/// Written By: Nathaniel Taylor
+	/// Debugged By: Hunter Keating and Nathaniel Taylor
+	/// </summary>
 	public partial class MainPage : ContentPage
 	{
 		//Field
 		private Networking network;
 		private string serverName;
 		private string text;
+		private ILogger<MainPage> logger;
 
 		/// <summary>
 		/// Initializes the GUI, creates a new Networking object, and initializes the
@@ -26,6 +32,7 @@ namespace ChatClient {
 			serverAdd.Text = "localhost";
 			serverName = Dns.GetHostName();
 			text = "";
+			this.logger = logger;
 		}
 
 		/// <summary>
@@ -39,6 +46,8 @@ namespace ChatClient {
 			beginConnection.Text = "Connecting...";
 			sentMessages.Add(beginConnection);
 			network.Connect(serverName, 11000);
+
+			logger.LogInformation("A connection has successfully begun.");
         }
 
 		/// <summary>
@@ -53,6 +62,8 @@ namespace ChatClient {
 
             Thread messageThread = new Thread(() => client.AwaitMessagesAsync(infinite: true));
             messageThread.Start();
+
+			logger.LogInformation("A connection has been successfully established.");
         }
 
 		/// <summary>
@@ -65,6 +76,9 @@ namespace ChatClient {
 			Label disconnectedLabel = new Label();
 			disconnectedLabel.Text = "You have been disconnected from the server.";
             Application.Current.Dispatcher.Dispatch((Action)(() => sentMessages.Add(disconnectedLabel)));
+
+			logger.LogInformation("A connection has dropped. This could be because the server was shutdown" +
+								  " or an error has occured.");
 		}
 
 		/// <summary>
@@ -79,6 +93,8 @@ namespace ChatClient {
 			Label messageLabel = new Label();
 			messageLabel.Text = text;
 			Application.Current.Dispatcher.Dispatch((Action)(() => sentMessages.Add(messageLabel)));
+
+			logger.LogInformation("A message has successfully arrived.");
 		}
 
         /// <summary>
@@ -89,6 +105,8 @@ namespace ChatClient {
         private void ServerAddressChanged(object sender, EventArgs e)
 		{
 			serverName = (sender as Entry).Text;
+
+			logger.LogInformation("The server name has successfully been changed.");
 		}
 
         /// <summary>
@@ -100,6 +118,8 @@ namespace ChatClient {
 		{
 			text = (sender as Entry).Text;
 			network.Send(text);
+
+			logger.LogInformation("A message has successfully been written.");
 		}
 
 		/// <summary>
@@ -110,6 +130,8 @@ namespace ChatClient {
 		private void ChangeID(object sender, EventArgs e)
 		{
 			network.ID = (sender as Entry).Text;
+
+			logger.LogInformation("The name of the client has successfully been changed.");
 		}
 	}
 }
