@@ -21,6 +21,7 @@ namespace Communications
         private char terminationChar;
         private TcpClient client;
         private ILogger logger;
+        private byte[] buffer;
 
         /// <summary>
         /// Gets or sets the name of the client
@@ -46,6 +47,7 @@ namespace Communications
             this.onConnect        = onConnect;
             this.reportDisconnect = reportDisconnect;
             client                = new TcpClient();
+            buffer = new byte[1];
         }
 
         /// <summary>
@@ -60,7 +62,7 @@ namespace Communications
         private Networking(ILogger logger, TcpClient client, ReportConnectionEstablished onConnect, ReportDisconnect
                            reportDisconnect, ReportMessageArrived onMessage, char terminationCharacter)
         {
-            ID = client.GetStream().Socket.RemoteEndPoint.ToString();
+            ID = "";
             cancelSource = new CancellationTokenSource();
             terminationChar = terminationCharacter;
             this.logger = logger;
@@ -68,6 +70,7 @@ namespace Communications
             this.onConnect = onConnect;
             this.reportDisconnect = reportDisconnect;
             this.client = client;
+            buffer = new byte[1];
         }
 
         /// <summary>
@@ -103,24 +106,23 @@ namespace Communications
             try
             {
                 NetworkStream clientStream = client.GetStream();
-                byte[] message = new byte[clientStream.Length];
                 if (infinite == true)
                 {
                     while (infinite)
                     {
-                        int total = await clientStream.ReadAsync(message, 0, message.Length);
+                        int total = await clientStream.ReadAsync(buffer, 0, buffer.Length);
                         if (total == 0)
                             throw new Exception("You have been disconnected.");
-                        onMessage(this, message.ToString());
+                        onMessage(this, buffer.ToString());
                     }
                 }
                 else
                 {
-                    int total = await clientStream.ReadAsync(message, 0, message.Length);
+                    int total = await clientStream.ReadAsync(buffer, 0, buffer.Length);
 
                     if (total == 0)
                         throw new Exception("You have been disconnected.");
-                    onMessage(this, message.ToString());
+                    onMessage(this, buffer.ToString());
                     return;
                 }
             }
@@ -146,6 +148,7 @@ namespace Communications
                     TcpClient connection = await listener.AcceptTcpClientAsync(cancelSource.Token);
                     Networking newConnection = new Networking(logger, connection, onConnect, reportDisconnect,
                                                               onMessage, terminationChar);
+                    newConnection.ID = connection.GetStream().Socket.RemoteEndPoint.ToString();
                     onConnect(newConnection);
                 }
             }
@@ -182,8 +185,8 @@ namespace Communications
             {
                 text += terminationChar;
                 NetworkStream clientStream = client.GetStream();
-                byte[] message = Encoding.UTF8.GetBytes(text);
-                await clientStream.WriteAsync(message, 0, message.Length);
+                buffer = Encoding.UTF8.GetBytes(text);
+                await clientStream.WriteAsync(buffer, 0, buffer.Length);
             }
         }
     }

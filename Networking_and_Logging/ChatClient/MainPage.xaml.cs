@@ -49,9 +49,6 @@ namespace ChatClient {
             Label connected = new Label();
 			connected.Text = "Connection successful.";
 			sentMessages.Add(connected);
-
-			Thread messagingThread = new Thread(() => network.AwaitMessagesAsync(infinite:true));
-			messagingThread.Start();
 		}
 
 		/// <summary>
@@ -63,7 +60,7 @@ namespace ChatClient {
 		{
 			Label disconnectedLabel = new Label();
 			disconnectedLabel.Text = "You have been disconnected from the server.";
-			sentMessages.Add(disconnectedLabel);
+            Application.Current.Dispatcher.Dispatch((Action)(() => sentMessages.Add(disconnectedLabel)));
 		}
 
 		/// <summary>

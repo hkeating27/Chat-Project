@@ -38,8 +38,8 @@ namespace ChatServer
             someoneConnected.Text = channel.ID + " has connected";
             Application.Current.Dispatcher.Dispatch((Action)(() => allSentMessages.Add(someoneConnected)));
 
-            if (connectedClients.Count >= 25)
-                serverNetwork.StopWaitingForClients();
+            Thread messageThread = new Thread(() => channel.AwaitMessagesAsync(infinite: true));
+            messageThread.Start();
         }
 
         private void connectionDropped(Networking channel)
