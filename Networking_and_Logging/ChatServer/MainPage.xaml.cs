@@ -37,9 +37,6 @@ namespace ChatServer
             Label someoneConnected = new Label();
             someoneConnected.Text = channel.ID + " has connected";
             Application.Current.Dispatcher.Dispatch((Action)(() => allSentMessages.Add(someoneConnected)));
-
-            Thread messageThread = new Thread(() => channel.AwaitMessagesAsync(infinite: true));
-            messageThread.Start();
         }
 
         private void connectionDropped(Networking channel)

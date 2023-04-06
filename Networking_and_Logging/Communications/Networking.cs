@@ -91,9 +91,8 @@ namespace Communications
             }
             catch (Exception e)
             {
-                /*logger.LogError("There was a problem connecting to the server. Check to make sure the given " +
-                                "host and port are correct.");*/
-                throw new Exception(e.Message);
+                logger.LogInformation("There was a problem connecting to the server. Check to make sure the given " +
+                                "host and port are correct.");
             }
         }
 
@@ -110,7 +109,7 @@ namespace Communications
                 {
                     while (infinite)
                     {
-                        int total = await clientStream.ReadAsync(buffer, 0, buffer.Length);
+                        int total = await clientStream.ReadAsync(buffer);
                         if (total == 0)
                             throw new Exception("You have been disconnected.");
                         onMessage(this, buffer.ToString());
@@ -118,7 +117,7 @@ namespace Communications
                 }
                 else
                 {
-                    int total = await clientStream.ReadAsync(buffer, 0, buffer.Length);
+                    int total = await clientStream.ReadAsync(buffer);
 
                     if (total == 0)
                         throw new Exception("You have been disconnected.");
@@ -184,9 +183,9 @@ namespace Communications
             if (!text.Contains(terminationChar))
             {
                 text += terminationChar;
-                NetworkStream clientStream = client.GetStream();
                 buffer = Encoding.UTF8.GetBytes(text);
-                await clientStream.WriteAsync(buffer, 0, buffer.Length);
+                NetworkStream clientStream = client.GetStream();
+                await clientStream.WriteAsync(buffer);
             }
         }
     }

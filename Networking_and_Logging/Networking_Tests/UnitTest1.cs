@@ -13,8 +13,8 @@ namespace Networking_Tests
             Networking server = new Networking(NullLogger.Instance, newClient, s => { ; }, messageRecieved, '\n' );
             server.WaitForClients(11000, true);
 
-            Networking client = new Networking(NullLogger.Instance, clientConnect, s => { ; }, (a, s) => { ; }, '\n');
-            client.Connect(Dns.GetHostName(), 11000);
+            Networking clients = new Networking(NullLogger.Instance, clientConnect, s => { ; }, (a, s) => { ; }, '\n');
+            clients.Connect(Dns.GetHostName(), 11000);
         }
 
         public void newClient(Networking client)

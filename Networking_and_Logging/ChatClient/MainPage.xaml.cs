@@ -4,6 +4,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Maui.Controls.Internals;
 using System.Net;
 using System.Net.Sockets;
+using System.Threading.Channels;
 
 namespace ChatClient {
 
@@ -48,8 +49,11 @@ namespace ChatClient {
 		{
             Label connected = new Label();
 			connected.Text = "Connection successful.";
-			sentMessages.Add(connected);
-		}
+            sentMessages.Add(connected);
+
+            Thread messageThread = new Thread(() => client.AwaitMessagesAsync(infinite: true));
+            messageThread.Start();
+        }
 
 		/// <summary>
 		/// The callback method that the Networking object calls whenever the specified client
