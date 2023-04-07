@@ -42,6 +42,8 @@ discussed above. We didn't think that we needed a ton of information from our lo
 whether or not something was working. We though that if we needed indepth information on why something wasn't
 working then throwing an exception was better because we could just look up the error and StackOverflow 
 solutions.
+We decided to only allow 15 clients to connect to a single server because the multiple clients test showed us that
+25 clients makes the test take almost a minute, but 15 clients cuts that time in half.
 
 
 **Branching:**

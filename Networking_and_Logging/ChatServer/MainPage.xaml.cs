@@ -50,6 +50,12 @@ namespace ChatServer
             someoneConnected.Text = channel.ID + " has connected";
             Application.Current.Dispatcher.Dispatch((Action)(() => allSentMessages.Add(someoneConnected)));
 
+            lock (connectedClients)
+            {
+                if (connectedClients.Count == 15)
+                    serverNetwork.StopWaitingForClients();
+            }
+
             logger.LogInformation("A connection to the server has successfully been made.");
         }
 
@@ -61,7 +67,7 @@ namespace ChatServer
         {
             connectedClients.Remove(channel);
             Label someoneDisconnected = new Label();
-            someoneDisconnected.Text = "Someone has disconnected";
+            someoneDisconnected.Text = channel.ID + " has disconnected";
             Application.Current.Dispatcher.Dispatch((Action)(() => allSentMessages.Add(someoneDisconnected)));
 
             logger.LogInformation("A client has been disconnected from the server.");
@@ -109,8 +115,16 @@ namespace ChatServer
         /// <param name="e">The Event Arguments of the event that called this method</param>
         private void ServerShutdown(object sender, EventArgs e)
         {
-            foreach (Networking client in connectedClients)
-                client.Disconnect();
+            lock (connectedClients)
+            {
+                Networking[] copyOfClients = new Networking[connectedClients.Count];
+                connectedClients.CopyTo(copyOfClients);
+                foreach (Networking client in copyOfClients)
+                    client.Disconnect();
+            }
+
+            serverNetwork.Disconnect();
+            serverNetwork.StopWaitingForClients();
             connectedClients.Clear();
 
             logger.LogInformation("The server has successfully been shutdown.");
