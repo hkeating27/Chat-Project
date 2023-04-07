@@ -34,7 +34,7 @@
                     VerticalOptions="FillAndExpand"
                     Orientation="Vertical">
                     <VerticalStackLayout x:Name="sentMessages">
-                        <Label Text="Why does this work?"/>
+                        <!-- As messages will be sent, a label with those messages will be added -->
                     </VerticalStackLayout>
                 </ScrollView>
             </Border>
@@ -46,13 +46,14 @@
             <Border
                 HeightRequest="300" 
                 WidthRequest="350">
-                <VerticalStackLayout>
+                <VerticalStackLayout x:Name="listOfParticipants">
                     <!-- When the RetrieveParticipants button is clicked, labels with those participants will be added-->
                 </VerticalStackLayout>
             </Border>
             
             <Line HeightRequest="15" WidthRequest="15"/>
-            <Button x:Name="retrieveParticipants" Text="Retrieve Participants" HeightRequest="25" WidthRequest="200"/>
+            <Button x:Name="retrieveParticipants" Text="Retrieve Participants" HeightRequest="25" WidthRequest="200"
+                                                                               Clicked="retrieveClients"/>
         </VerticalStackLayout>
     </HorizontalStackLayout>
 

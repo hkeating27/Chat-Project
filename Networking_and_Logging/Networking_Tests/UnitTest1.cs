@@ -20,16 +20,29 @@ namespace Networking_Tests
             clients.Connect(Dns.GetHostName(), 11000);
         }
 
+        /// <summary>
+        /// The callback method for the simpleClientServerTest's server network onConnect parameter
+        /// </summary>
+        /// <param name="client">the client made by the server after a connection</param>
         public void newClient(Networking client)
         {
             client.AwaitMessagesAsync();
         }
 
+        /// <summary>
+        /// The callback method for the simpleClientServerTest's server network onMessage parameter
+        /// </summary>
+        /// <param name="server">Called whenever the server recieves a message</param>
+        /// <param name="message">The message recieved</param>
         public void messageRecieved(Networking server, string message)
         {
             Assert.AreEqual("message", message);
         }
 
+        /// <summary>
+        /// The callback method for the simpleClientServerTest's client network onConnect parameter
+        /// </summary>
+        /// <param name="network">The client who has connected</param>
         public void clientConnect(Networking network)
         {
             network.Send("message");
@@ -55,16 +68,29 @@ namespace Networking_Tests
             }
         }
 
+        /// <summary>
+        /// The callback method for the multipleClientConnectToServerTest's client networks onConnect parameter
+        /// </summary>
+        /// <param name="network">The client network who has connected</param>
         public void multipleClientConnect(Networking network)
         {
             network.Send("message");
         }
 
+        /// <summary>
+        /// The callback method for the multipleClientConnectToServerTest's server network onConnect parameter
+        /// </summary>
+        /// <param name="client"></param>
         public void multipleNewClients(Networking client)
         {
             client.AwaitMessagesAsync();
         }
 
+        /// <summary>
+        /// The callback method for the multipleClientConnectToServerTest's server network onMessage parameter
+        /// </summary>
+        /// <param name="client">The client who sent the message</param>
+        /// <param name="text">The message sent</param>
         public void multipleMessagesRecieved(Networking client, string text)
         {
             List<string> messages = new List<string>();

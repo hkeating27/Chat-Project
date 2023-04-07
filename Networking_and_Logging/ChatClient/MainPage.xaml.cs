@@ -20,6 +20,8 @@ namespace ChatClient {
 		private string serverName;
 		private string text;
 		private ILogger<MainPage> logger;
+		private List<string> participants;
+		private string clientName;
 
 		/// <summary>
 		/// Initializes the GUI, creates a new Networking object, and initializes the
@@ -32,7 +34,9 @@ namespace ChatClient {
 			serverAdd.Text = "localhost";
 			serverName = Dns.GetHostName();
 			text = "";
+			clientName = "";
 			this.logger = logger;
+			participants = new List<string>();
 		}
 
 		/// <summary>
@@ -59,6 +63,9 @@ namespace ChatClient {
             Label connected = new Label();
 			connected.Text = "Connection successful.";
             sentMessages.Add(connected);
+
+			if (clientName != "")
+				client.ID = clientName;
 
             Thread messageThread = new Thread(() => client.AwaitMessagesAsync(infinite: true));
             messageThread.Start();
@@ -93,14 +100,34 @@ namespace ChatClient {
 			Label messageLabel = new Label();
 			messageLabel.Text = text;
 
-			
+
 			if (text.Contains("Command Participants,"))
 			{
+				string nameChange = "";
+				for (int i = 0; i <= text.Length; i++)
+				{
+					if (text[i] == '[' && text[i + 1] != ']')
+						nameChange += text[i + 1];
+					else
+						nameChange += text[i];
 
+					if (text[i] == ']')
+					{
+						participants.Add(nameChange);
+					}
+				}
 			}
-			Application.Current.Dispatcher.Dispatch((Action)(() => sentMessages.Add(messageLabel)));
+			else if (text.StartsWith("This client is in the server:"))
+			{
+				participants.Add(text.Substring(28));
+			}
+			else
+			{
+				messageLabel.Text = client.ID + messageLabel.Text;
+				Application.Current.Dispatcher.Dispatch((Action)(() => sentMessages.Add(messageLabel)));
 
-			logger.LogInformation("A message has successfully arrived.");
+				logger.LogInformation("A message has successfully arrived.");
+			}
 		}
 
         /// <summary>
@@ -135,9 +162,24 @@ namespace ChatClient {
 		/// <param name="e">The Event Arguments of the event that triggers this method</param>
 		private void ChangeID(object sender, EventArgs e)
 		{
-			network.ID = (sender as Entry).Text;
+			clientName = (sender as Entry).Text;
 
 			logger.LogInformation("The name of the client has successfully been changed.");
+		}
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender">The button sending the event that triggers this method</param>
+		/// <param name="e">The Event Arguments of the event that triggers this method</param>
+		private void retrieveClients(object sender, EventArgs e)
+		{
+			foreach (string name in participants)
+			{
+				Label participantLabel = new Label();
+				participantLabel.Text = name;
+				listOfParticipants.Add(participantLabel);
+			}
 		}
 	}
 }

@@ -90,6 +90,7 @@ namespace ChatServer
                         message += text[i];
                 }
                 channel.ID = message;
+                channel.Send("Your name has been updated to: " + message);
             }
             else if (text == "Command Participants")
                 commandParticipants(channel);
@@ -136,7 +137,7 @@ namespace ChatServer
         private void commandParticipants(Networking client)
         {
             foreach(Networking channel in connectedClients)
-                client.Send(channel.ID);
+                client.Send("This client is in the server: " + channel.ID);
         }
     }
 }

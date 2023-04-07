@@ -3,13 +3,13 @@
 **Course:** CS 3500, University of Utah, School of Computing
 **GitHub IDs:** NSwimer1321 and hkeating27
 **Repo:** https://github.com/uofu-cs3500-spring23/assignment-seven---chatting-bluemangroup
-**Date:** 02/02/2023 Time: 11:48 pm
+**Date:** 04/06/2023 Time: 11:00 pm
 **Project Name:** ChatServer
 **Copyright:** CS 3500 and Nathaniel Taylor - This work may not be copied for use in Academic Coursework
 
 
 **Comments to Evaluators:**
-My work stands on its own.
+None of the command functions work.
 
 
 **Assignment Specific Topics:**
