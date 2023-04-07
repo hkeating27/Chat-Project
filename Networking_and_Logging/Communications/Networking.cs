@@ -120,7 +120,7 @@ namespace Communications
                         int total = await clientStream.ReadAsync(buffer);
                         if (total == 0)
                             throw new Exception("You have been disconnected.");
-                        onMessage(this, buffer.ToString());
+                        onMessage(this, System.Text.Encoding.Default.GetString(buffer));
                     }
                 }
                 else
