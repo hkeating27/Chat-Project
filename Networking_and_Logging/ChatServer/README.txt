@@ -9,7 +9,8 @@
 
 
 **Comments to Evaluators:**
-None of the command functions work.
+None of the command functions work. We are aware that fragments of messages sometimes add on quasi-randomly, and that this is due to the buffer not fully clearing. 
+We halved the amount of extra messages using Array.Clear() in AwaitMessageAsync() in Networking, but some still remain.
 
 
 **Assignment Specific Topics:**
@@ -18,8 +19,8 @@ GUI got working, the ChatServer GUI was working pretty soon after.
 
 
 **Consulted Peers:**
-I didn't specifically ask anyone for help on this project. I did, however, look on Piazza and ask
-if I had a question and asked a question myself.
+We didn't specifically ask anyone for help on this project. We did, however, look on Piazza and ask
+if we had a question and asked a question ourself.
 
 
 **References:**

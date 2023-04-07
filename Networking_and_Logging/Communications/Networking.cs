@@ -112,29 +112,25 @@ namespace Communications
         {
             try
             {
+                //Creates a stream between server and client
                 NetworkStream clientStream = client.GetStream();
                 if (infinite)
                 {
                     while (infinite)
                     {
+                        //Checks message length and throws if it is empty
                         int total = await clientStream.ReadAsync(buffer);
                         if (total == 0)
                             throw new Exception("You have been disconnected.");
                         onMessage(this, System.Text.Encoding.Default.GetString(buffer));
+                        //Clears the buffer, reducing the amount of repeat messages
+                        Array.Clear(buffer, 0, buffer.Length);
                     }
-                }
-                else
-                {
-                    int total = await clientStream.ReadAsync(buffer);
-
-                    if (total == 0)
-                        throw new Exception("You have been disconnected.");
-                    onMessage(this, buffer.ToString());
-                    return;
                 }
             }
             catch
             {
+                //Ends if the user disconnects
                 reportDisconnect(this);
             }
         }
@@ -146,22 +142,26 @@ namespace Communications
         /// <param name="infinte">Tells the client whether or not to continuously wait for clients</param>
         public async void WaitForClients(int port, bool infinte)
         {
+            //Listener that takes in any TCP client
             TcpListener listener = new TcpListener(IPAddress.Any, port);
             listener.Start();
             try
             {
                 while (infinte)
                 {
+                    //Creates clients and connection to them, as well as establishing their ID
                     TcpClient connection = await listener.AcceptTcpClientAsync(cancelSource.Token);
                     Networking newConnection = new Networking(logger, connection, onConnect, reportDisconnect,
                                                               onMessage, terminationChar);
                     newConnection.ID = connection.GetStream().Socket.RemoteEndPoint.ToString();
+                    //Methods for connecting
                     newConnection.AwaitMessagesAsync();
                     onConnect(newConnection);
                 }
             }
             catch
             {
+                //Stop listening in case infinite is false
                 listener.Stop();
             }
         }
@@ -189,13 +189,15 @@ namespace Communications
         /// <param name="text">The message to be sent</param>
         public async void Send(string text)
         {
+            //Sends message
             if (!text.Contains(terminationChar))
             {
                 text += terminationChar;
+                //Changes string to a buffer that the server can read
                 buffer = Encoding.UTF8.GetBytes(text);
                 NetworkStream clientStream = client.GetStream();
                 await clientStream.WriteAsync(buffer);
-
+                //Logger stores success
                 logger.LogInformation("A message has successfully been sent.");
             }
         }

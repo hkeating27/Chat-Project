@@ -46,6 +46,7 @@ namespace ChatClient {
 		/// <param name="e">The Event Arguments of the event that triggers this method</param>
 		private void ConnectToServer(object sender, EventArgs e)
 		{
+			//Initializes connection with GUI interaction
 			Label beginConnection = new Label();
 			beginConnection.Text = "Connecting...";
 			sentMessages.Add(beginConnection);
@@ -60,16 +61,20 @@ namespace ChatClient {
 		/// <param name="client">The client that connected to the server</param>
 		private void connectionComplete(Networking client)
 		{
+			//Lets the user know the connection was successful
             Label connected = new Label();
 			connected.Text = "Connection successful.";
             sentMessages.Add(connected);
 
+			//Sets the client ID if given
 			if (clientName != "")
 				client.ID = clientName;
 
+			//New thread between client and server
             Thread messageThread = new Thread(() => client.AwaitMessagesAsync(infinite: true));
             messageThread.Start();
 
+			//Logs success
 			logger.LogInformation("A connection has been successfully established.");
         }
 
@@ -80,6 +85,7 @@ namespace ChatClient {
 		/// <param name="client">The specified client</param>
 		private void connectionDropped(Networking client)
 		{
+			//Lets user know they have been disconnected
 			Label disconnectedLabel = new Label();
 			disconnectedLabel.Text = "You have been disconnected from the server.";
             Application.Current.Dispatcher.Dispatch((Action)(() => sentMessages.Add(disconnectedLabel)));
@@ -97,10 +103,11 @@ namespace ChatClient {
 		private void messageArrived(Networking client, string text)
 		{
 			network = client;
+			//GUI interface showing the message
 			Label messageLabel = new Label();
 			messageLabel.Text = text;
 
-
+			//Gets the name of every participant
 			if (text.Contains("Command Participants,"))
 			{
 				string nameChange = "";
@@ -117,10 +124,12 @@ namespace ChatClient {
 					}
 				}
 			}
+			
 			else if (text.StartsWith("This client is in the server:"))
 			{
 				participants.Add(text.Substring(28));
 			}
+			//Otherwise send a normal message
 			else
 			{
 				messageLabel.Text = client.ID + messageLabel.Text;
@@ -137,8 +146,9 @@ namespace ChatClient {
         /// <param name="e">The Event Arguments of the event that triggers this method</param>
         private void ServerAddressChanged(object sender, EventArgs e)
 		{
+			//Changes username
 			serverName = (sender as Entry).Text;
-
+			//Logs success
 			logger.LogInformation("The server name has successfully been changed.");
 		}
 
@@ -149,9 +159,10 @@ namespace ChatClient {
         /// <param name="e">The Event Arguments of the event that triggers this method</param>
         private void MessageCompleted(object sender, EventArgs e)
 		{
+			//Sets the text and sends it
 			text = (sender as Entry).Text;
 			network.Send(text);
-
+			//Logs success
 			logger.LogInformation("A message has successfully been written.");
 		}
 
@@ -162,8 +173,9 @@ namespace ChatClient {
 		/// <param name="e">The Event Arguments of the event that triggers this method</param>
 		private void ChangeID(object sender, EventArgs e)
 		{
+			//Changes the client ID
 			clientName = (sender as Entry).Text;
-
+			//Logs success
 			logger.LogInformation("The name of the client has successfully been changed.");
 		}
 
@@ -174,6 +186,7 @@ namespace ChatClient {
 		/// <param name="e">The Event Arguments of the event that triggers this method</param>
 		private void retrieveClients(object sender, EventArgs e)
 		{
+			//Retrieves list of all clients
 			foreach (string name in participants)
 			{
 				Label participantLabel = new Label();

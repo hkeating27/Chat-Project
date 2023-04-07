@@ -9,7 +9,7 @@
 
 
 **Comments to Evaluators:**
-None of the Command functions work.
+None of the Command functions work. 
 
 **Assignment Specific Topics:**
 This was by far the most difficult and least rewarding assignment. Virtually every step of the assignment brought
@@ -19,9 +19,9 @@ so long.
 
 
 **Consulted Peers:**
-I didn't specifically ask anyone for help on this project. I did, however, look on Piazza and ask
+We didn't specifically ask anyone for help on this project. We did, however, look on Piazza and ask
 if I had a question and asked a question myself.
 
 
 **References:**
-No references used besides my brain, lectures, and Piazza.
+No references used besides our brains, lectures and slides, official documentation, and Piazza.

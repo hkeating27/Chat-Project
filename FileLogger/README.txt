@@ -9,7 +9,7 @@
 
 
 **Comments to Evaluators:**
-My work stands on its own.
+Our work stands on its own.
 
 
 **Assignment Specific Topics:**
@@ -19,9 +19,9 @@ with it, so there aren't really many comments.
 
 
 **Consulted Peers:**
-I didn't specifically ask anyone for help on this project. I did, however, look on Piazza and ask
+We didn't specifically ask anyone for help on this project. We did, however, look on Piazza and ask
 if I had a question and asked a question myself.
 
 
 **References:**
-No references used besides my brain, lectures, and Piazza.
+No references used besides our brains, lectures and slides, official documentation, and Piazza.
