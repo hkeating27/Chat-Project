@@ -113,7 +113,7 @@ namespace Communications
             try
             {
                 NetworkStream clientStream = client.GetStream();
-                if (infinite == true)
+                if (infinite)
                 {
                     while (infinite)
                     {
@@ -156,6 +156,7 @@ namespace Communications
                     Networking newConnection = new Networking(logger, connection, onConnect, reportDisconnect,
                                                               onMessage, terminationChar);
                     newConnection.ID = connection.GetStream().Socket.RemoteEndPoint.ToString();
+                    newConnection.AwaitMessagesAsync();
                     onConnect(newConnection);
                 }
             }

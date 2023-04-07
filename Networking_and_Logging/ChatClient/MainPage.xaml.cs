@@ -92,6 +92,12 @@ namespace ChatClient {
 			network = client;
 			Label messageLabel = new Label();
 			messageLabel.Text = text;
+
+			
+			if (text.Contains("Command Participants,"))
+			{
+
+			}
 			Application.Current.Dispatcher.Dispatch((Action)(() => sentMessages.Add(messageLabel)));
 
 			logger.LogInformation("A message has successfully arrived.");

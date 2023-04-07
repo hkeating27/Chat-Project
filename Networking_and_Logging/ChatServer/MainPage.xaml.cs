@@ -3,6 +3,7 @@ using FileLogger;
 using Microsoft.Extensions.Logging;
 using System.Net;
 using System.Net.Sockets;
+using System.Runtime.InteropServices;
 
 namespace ChatServer
 {
@@ -61,7 +62,7 @@ namespace ChatServer
             connectedClients.Remove(channel);
             Label someoneDisconnected = new Label();
             someoneDisconnected.Text = "Someone has disconnected";
-            allSentMessages.Add(someoneDisconnected);
+            Application.Current.Dispatcher.Dispatch((Action)(() => allSentMessages.Add(someoneDisconnected)));
 
             logger.LogInformation("A client has been disconnected from the server.");
         }
@@ -73,16 +74,32 @@ namespace ChatServer
         /// <param name="text">The message that was sent</param>
         private void messageArrived(Networking channel, string text)
         {
-            foreach (Networking client in  connectedClients)
+            if (text.Contains("Command Name ["))
             {
-                client.Send(text);
+                text = text.Substring(13);
+                string message = "";
+                for (int i = 0; i < text.Length; i++)
+                {
+                    if (text[i] != ']' || text[i] != ']')
+                        message += text[i];
+                }
+                channel.ID = message;
             }
+            else if (text == "Command Participants")
+                commandParticipants(channel);
+            else
+            {
+                foreach (Networking client in connectedClients)
+                {
+                    client.Send(text);
+                }
 
-            Label someoneSentMsg = new Label();
-            someoneSentMsg.Text = "Someone has sent a message";
-            allSentMessages.Add(someoneSentMsg);
+                Label someoneSentMsg = new Label();
+                someoneSentMsg.Text = "Someone has sent a message";
+                Application.Current.Dispatcher.Dispatch((Action)(() => allSentMessages.Add(someoneSentMsg)));
 
-            logger.LogInformation("A message:" + text + " has successfully been sent to all clients.");
+                logger.LogInformation("A message:" + text + " has successfully been sent to all clients.");
+            }
         }
 
         /// <summary>
@@ -97,6 +114,15 @@ namespace ChatServer
             connectedClients.Clear();
 
             logger.LogInformation("The server has successfully been shutdown.");
+        }
+
+        /// <summary>
+        /// Sends a list of participants back to the requesting client
+        /// </summary>
+        private void commandParticipants(Networking client)
+        {
+            foreach(Networking channel in connectedClients)
+                client.Send(channel.ID);
         }
     }
 }
